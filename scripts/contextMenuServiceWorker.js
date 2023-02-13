@@ -1,5 +1,14 @@
 // Function to get + decode API key
-const getKey = () => {};
+const getKey = () => {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get(['openai-key'], (result) => {
+      if (result['openai-key']) {
+        const decodedKey = atob(result['openai-key']);
+        resolve(decodedKey);
+      }
+    });
+  });
+};
 
 const generate = async (prompt) => {
   // Get your API key from storage
